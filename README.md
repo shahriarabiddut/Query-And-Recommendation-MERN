@@ -126,3 +126,4 @@ The backend server will be accessible at http://localhost:5000 (http://localhost
 # Website
 -   Product Recommendation System
 -   Live Site Link : https://progheroa11.web.app
+![Application Screenshot](/screenshot.png)
