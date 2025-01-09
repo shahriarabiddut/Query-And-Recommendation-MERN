@@ -3,7 +3,6 @@
 ## Introduction
 ProRecommendation is a collaborative and interactive web application designed to help users discover the best products through community-driven queries and recommendations. This platform fosters informed purchasing decisions by enabling users to post queries, share recommendations, and engage in discussions.
 
----
 
 ## Purpose
 The platform aims to:
@@ -11,7 +10,6 @@ The platform aims to:
 - Enable the community to contribute recommendations and insights.
 - Encourage meaningful discussions to assist users in making better decisions.
 
----
 
 ## Features
 
@@ -26,7 +24,6 @@ The platform aims to:
 ### Product Details
 - Access detailed information about queries and recommended products.
 
----
 
 ## Technology Stack
 
@@ -43,7 +40,6 @@ The platform aims to:
 ### State Management
 - **Context API**: Ensures smooth and consistent state management across the application.
 
----
 
 ## Dependencies
 
@@ -82,7 +78,6 @@ The platform aims to:
 - `tailwindcss`: ^3.4.17
 - `vite`: ^6.0.3
 
----
 
 ### Server Side (Query-Server)
 #### **Dependencies**
@@ -94,7 +89,6 @@ The platform aims to:
 - `jsonwebtoken`: ^9.0.2
 - `mongodb`: ^6.11.0
 
----
 
 ## Instructions for Running the Project Locally
 
@@ -126,4 +120,6 @@ The backend server will be accessible at http://localhost:5000 (http://localhost
 # Website
 -   Product Recommendation System
 -   Live Site Link : https://progheroa11.web.app
+-   Screenshot : 
+
 ![Application Screenshot](/screenshot.png)
