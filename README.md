@@ -115,7 +115,7 @@ The platform aims to:
 4. **Start the backend server:**
 -   `npm run start` or install nodemon globally!
 5. **Verify the server is running:**
-The backend server will be accessible at http://localhost:5000 (http://localhost:portnamber)
+The backend server will be accessible at http://localhost:5000 (http://localhost:port)
 
 # Website
 -   Product Recommendation System
