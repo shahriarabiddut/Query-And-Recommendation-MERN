@@ -1,10 +1,14 @@
 import React from "react";
 import about from "../assets/photo/about.png";
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 
 const About = () => {
   return (
     <section className="min-h-screen py-10 md:py-20 gap-8 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 mx-auto w-11/12">
+      <Helmet>
+        <title>About | EquiSports</title>
+      </Helmet>
       <div className="col-span-1 flex items-center">
         <img src={about} alt="About Us" />
       </div>

@@ -28,8 +28,12 @@ const HomeLayout = () => {
           urlHome={urlHome}
           counts={counts}
         />
-        <MostViewed />
+        <MostViewed title={"Most Viewed Queries"} type={"queriesByView"} />
         <Community />
+        <MostViewed
+          title={"Most Recommended Queries"}
+          type={"queriesByRecommendation"}
+        />
         <GetInTouch />
       </main>
       <Footer />

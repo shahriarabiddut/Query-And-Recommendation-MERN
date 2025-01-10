@@ -204,7 +204,13 @@ async function run() {
         //Get Most Viewed Queries
         app.get('/queriesByView', async(req,res)=>{
           const result = await queryCollection.find().limit(6).sort({ views: -1 }).toArray();
-          console.log(`All Queries Fetched By Page!`);
+          console.log(`All Queries Fetched By Top View!`);
+          res.send(result);
+        });
+        //Get Most Viewed Queries
+        app.get('/queriesByRecommendation', async(req,res)=>{
+          const result = await queryCollection.find().limit(6).sort({ recommendationCount: -1 }).toArray();
+          console.log(`All Queries Fetched By Recommendation Count!`);
           res.send(result);
         });
         //Get All Queries

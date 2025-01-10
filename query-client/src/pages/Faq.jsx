@@ -1,9 +1,13 @@
 import React from "react";
 import faq from "../assets/photo/faq.png";
+import { Helmet } from "react-helmet-async";
 
 const Faq = () => {
   return (
     <section className="min-h-screen py-10 md:py-20 gap-8 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 mx-auto w-11/12">
+      <Helmet>
+        <title>FAQ | EquiSports</title>
+      </Helmet>
       <div className="col-span-1 flex items-center">
         <img src={faq} alt="FAQ" />
       </div>
