@@ -17,8 +17,8 @@ const Queries = () => {
   const [loader, setLoader] = useState(true);
   const [queries, setQueries] = useState([]);
   const [columns, setColumns] = useState(0);
-  const [samePage, setSamePage] = useState(0);
-  const [searched, setSearched] = useState("");
+  //
+  const [search, setSearch] = useState("");
   const oldGridClass = `grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 my-10 `;
   const gridClass = `grid gap-4 my-10 ${
     columns === 1
@@ -31,48 +31,54 @@ const Queries = () => {
       ? "grid-cols-4"
       : "sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
   }`;
-  const [searchText, setSearchText] = useState("");
-  const filteredQueries = queries.filter((query) =>
-    query.productName.toLowerCase().includes(searchText.toLowerCase())
-  );
   // Pagination
   const [currentPage, setCurrentPage] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState(12);
   const [count, setCount] = useState(0);
+  //Search PAgination
+  const [oldCount, setOldCount] = useState(0);
+  const [counted, setCounted] = useState(false);
+  //
   const numberOfPages = Math.ceil(count / itemsPerPage);
   const pages = [...Array(numberOfPages).keys()];
   //
   useEffect(() => {
     axiosSecure
-      .get(`/queries?page=${currentPage}&size=${itemsPerPage}`)
+      .get(`/queries?page=${currentPage}&size=${itemsPerPage}&search=${search}`)
       .then((res) => setQueries(res.data))
       .catch((error) => console.error(error));
     setTimeout(() => {
       setLoader(false);
     }, 3000);
-  }, [currentPage, itemsPerPage]);
+    if (counted) {
+      setCount(queries.length);
+    }
+    if (search.trim() === "") {
+      setCounted(false);
+      setCount(oldCount);
+    } else {
+      setCounted(true);
+    }
+  }, [currentPage, itemsPerPage, search]);
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (samePage) {
-      setLoader(true);
-      let searchVal = e.target.productName.value;
-      setSearched(searchVal);
-      axiosSecure
-        .get(`/querySearch?name=${searchVal}`)
-        .then((res) => setQueries(res.data))
-        .catch((error) => console.error(error));
-      setTimeout(() => {
-        setLoader(false);
-      }, 3000);
-    }
-  };
-  const handleSelectChange = (event) => {
-    const value = parseInt(event.target.value);
-    setSamePage(value);
+    setLoader(true);
+    let searchVal = e.target.productName.value;
+    setSearch(searchVal);
+    axiosSecure
+      .get(`/queries?search=${search}`)
+      .then((res) => setQueries(res.data))
+      .catch((error) => console.error(error));
+    setTimeout(() => {
+      setLoader(false);
+    }, 3000);
   };
   //   Pagination Functions
   useEffect(() => {
-    axiosSecure("/queriesCount").then((res) => setCount(res.data.count));
+    axiosSecure("/queriesCount").then((res) => {
+      setCount(res.data.count);
+      setOldCount(res.data.count);
+    });
   }, []);
   //
   return (
@@ -115,28 +121,15 @@ const Queries = () => {
           </div> */}
           <LayoutSelector setColumns={setColumns} />
           <div className="my-4 flex justify-center md:justify-end gap-2">
-            <select
-              className="select select-bordered w-1/4"
-              onChange={handleSelectChange}
-              defaultValue=""
-            >
-              <option disabled>Select Page?</option>
-              <option value="0">This Page</option>
-              <option value="1">All Query</option>
-            </select>
             <form onSubmit={handleSubmit} className="flex">
               <label className="input input-bordered flex items-center gap-2">
                 <input
                   type="text"
                   className="w-3/4 grow"
                   placeholder="Search by Product Name..."
-                  defaultValue={searchText}
+                  defaultValue={search}
                   name="productName"
-                  onChange={(e) => {
-                    if (samePage == 0) {
-                      setSearchText(e.target.value);
-                    }
-                  }}
+                  onKeyUp={(e) => setSearch(e.target.value)}
                 />
                 <button>
                   <FaSearch />
@@ -146,10 +139,10 @@ const Queries = () => {
           </div>
         </div>
 
-        {searched != "" && (
+        {search != "" && (
           <div className="flex flex-wrap gap-3 md:justify-between items-center">
             <h1 className="p-3 bg-slate-100 rounded-sm">
-              You have Searched <span className="font-bold ">{searched}</span>
+              You have Searched <span className="font-bold ">{search}</span>
             </h1>
             <Link
               to={"/queries"}
@@ -161,10 +154,10 @@ const Queries = () => {
         )}
         {loader ? (
           <Loading />
-        ) : filteredQueries.length !== 0 ? (
+        ) : queries.length !== 0 ? (
           <>
             <div className={gridClass}>
-              {filteredQueries.map((query) => (
+              {queries.map((query) => (
                 <QueryCard2
                   key={query._id}
                   query={query}
@@ -201,7 +194,7 @@ const Queries = () => {
                     <option value="60">60</option>
                 </select>
             </div> */}
-        {filteredQueries.length !== 0 && (
+        {queries.length !== 0 && (
           <Pagination
             setItemsPerPage={setItemsPerPage}
             setCurrentPage={setCurrentPage}

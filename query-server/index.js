@@ -208,12 +208,28 @@ async function run() {
           res.send(result);
         });
         //Get All Queries
-        app.get('/queries', async(req,res)=>{
-          const page = parseInt(req.query.page);
-          const size = parseInt(req.query.size);
-          const result = await queryCollection.find().skip(page * size).limit(size).sort({ _id: -1 }).toArray();
-          console.log(`All Queries Fetched By Page!`, page, size);
-          res.send(result);
+        app.get('/queries', async (req, res) => {
+          try {
+            const page = parseInt(req.query.page) || 0; 
+            const size = parseInt(req.query.size) || 10; 
+            const search = req.query.search || '';
+            let filter = {};
+            if (search.trim() !== '') {
+              filter.productName = { $regex: search, $options: 'i' };
+            }
+            const result = await queryCollection
+              .find(filter)
+              .skip(page * size)
+              .limit(size)
+              .sort({ _id: -1 })
+              .toArray();
+
+            console.log(`All Queries Fetched By Page! Page: ${page}, Size: ${size}, Search: ${search}`);
+            res.status(200).send(result);
+          } catch (error) {
+            console.error('Error fetching queries:', error);
+            res.status(500).send({ message: 'Internal Server Error' });
+          }
         });
         //Get Simillar Category Equipments Data
         app.get('/querySameCategory/:id', async(req,res)=>{
@@ -489,6 +505,18 @@ async function run() {
         const result = await queryCollection.updateOne(filter,updatedQuery,options);
         console.log('Query Recommendation Count Decreased!');
         //
+        res.send(result);
+      });
+      // Recommender User
+      // Get User
+      app.get('/recommenderUser', async (req, res) => {
+        const { email } = req.query; 
+        const query = { email: email };
+        const projection = { photo: 1, _id: 0 };
+        const result = await userCollection.findOne(query, { projection });
+        if (!result) {
+          return res.status(404).send({ message: 'User not found.' });
+        }
         res.send(result);
       });
       // Get All Activity

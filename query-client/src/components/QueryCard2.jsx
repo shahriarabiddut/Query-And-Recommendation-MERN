@@ -6,25 +6,13 @@ const QueryCard = ({ query, columns }) => {
     <>
       <div className="card bg-base-100 shadow-xl">
         <figure>
-          <img
-            src={query.image}
-            alt="Shoes"
-            className={`p-2 ${
-              columns === 1
-                ? "h-80 w-80"
-                : columns === 2
-                ? "h-72 w-72 "
-                : columns === 3
-                ? "h-64 w-64 "
-                : "h-72 w-72 "
-            }`}
-          />
+          <img src={query.image} alt="Shoes" className={`p-2 h-72 w-72`} />
         </figure>
         <div className="card-body font-barlow">
           <Link to={`/queries/${query._id}`}>
             <h2
               className={`card-title text-2xl  hover:text-blue-400 text-cyan-600 ${
-                columns === 3 ? "h-24" : columns === 4 ? "h-28" : ""
+                columns === 3 ? "h-24" : columns === 4 ? "h-28" : "h-24"
               }`}
               title="Click to See Details"
             >
