@@ -18,6 +18,9 @@ import MyRecomendations from "../pages/MyRecomendations";
 import ViewQuery from "../pages/ViewQuery";
 import UpdateQuery from "../pages/UpdateQuery";
 import UpdateProfile from "../pages/UpdateProfile";
+import About from "../pages/About";
+import Contact from "../pages/Contact";
+import Faq from "../pages/Faq";
 
 const urlHome = import.meta.env.VITE_URL;
 const router = createBrowserRouter([
@@ -77,6 +80,31 @@ const router = createBrowserRouter([
       },
     ],
   },
+  // Pages
+  {
+    path: "/pages",
+    element: <PageLayout />,
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        path: "/pages",
+        element: <Faq />,
+      },
+      {
+        path: "/pages/about",
+        element: <About />,
+      },
+      {
+        path: "/pages/contact",
+        element: <Contact />,
+      },
+      {
+        path: "/pages/faq",
+        element: <Faq />,
+      },
+    ],
+  },
+  //
   {
     path: "/queries",
     element: <PageLayout />,

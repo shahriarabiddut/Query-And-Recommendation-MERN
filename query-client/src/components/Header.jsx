@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FaBars, FaSignInAlt, FaSignOutAlt } from "react-icons/fa";
+import { FaBars, FaSignInAlt, FaSignOutAlt, FaUser } from "react-icons/fa";
 import { FaMessage } from "react-icons/fa6";
 import { NavLink } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
@@ -9,7 +9,7 @@ const Header = () => {
   const { user, logOut } = useAuth();
   const loggedIn = user != null;
   const mobileCss =
-    "hover:bg-white hover:font-bold hover:text-black p-2 rounded-lg font-medium cursor-pointer";
+    "hover:bg-white hover:font-bold hover:text-black p-1 rounded-lg font-medium cursor-pointer";
   const links = (
     <>
       <li>
@@ -36,43 +36,102 @@ const Header = () => {
           Queries
         </NavLink>
       </li>
+
+      <li>
+        <NavLink
+          to={`/pages/about`}
+          className={({ isActive }) =>
+            isActive
+              ? "text-blue-600 font-bold border-b-2 border-blue-600"
+              : "hover:text-blue-600 hover:font-semibold"
+          }
+        >
+          About
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
+          to={`/pages/faq`}
+          className={({ isActive }) =>
+            isActive
+              ? "text-blue-600 font-bold border-b-2 border-blue-600"
+              : "hover:text-blue-600 hover:font-semibold"
+          }
+        >
+          FAQ
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
+          to={`/pages/contact`}
+          className={({ isActive }) =>
+            isActive
+              ? "text-blue-600 font-bold border-b-2 border-blue-600"
+              : "hover:text-blue-600 hover:font-semibold"
+          }
+        >
+          Contact
+        </NavLink>
+      </li>
       {loggedIn && (
         <>
           <li>
-            <NavLink
-              to={`/queries/recommendation`}
-              className={({ isActive }) =>
-                isActive
-                  ? "text-blue-600 font-bold border-b-2 border-blue-600"
-                  : "hover:text-blue-600 hover:font-semibold"
-              }
-            >
-              Recommendations For Me
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to={`/queries/myqueries`}
-              className={({ isActive }) =>
-                isActive
-                  ? "text-blue-600 font-bold border-b-2 border-blue-600"
-                  : "hover:text-blue-600 hover:font-semibold"
-              }
-            >
-              My Queries
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to={`/queries/myrecommendations`}
-              className={({ isActive }) =>
-                isActive
-                  ? "text-blue-600 font-bold border-b-2 border-blue-600"
-                  : "hover:text-blue-600 hover:font-semibold"
-              }
-            >
-              My Recommendations
-            </NavLink>
+            <details>
+              <summary className="font-bold">
+                {" "}
+                <FaUser className="text-blue-600" /> User Dashboard
+              </summary>
+              <ul className="p-2">
+                <li>
+                  <NavLink
+                    to={`/queries/recommendation`}
+                    className={({ isActive }) =>
+                      isActive
+                        ? "text-blue-600 font-bold border-b-2 border-blue-600"
+                        : "hover:text-blue-600 hover:font-semibold"
+                    }
+                  >
+                    Recommendations For Me
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to={`/queries/myqueries`}
+                    className={({ isActive }) =>
+                      isActive
+                        ? "text-blue-600 font-bold border-b-2 border-blue-600"
+                        : "hover:text-blue-600 hover:font-semibold"
+                    }
+                  >
+                    My Queries
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to={`/queries/myrecommendations`}
+                    className={({ isActive }) =>
+                      isActive
+                        ? "text-blue-600 font-bold border-b-2 border-blue-600"
+                        : "hover:text-blue-600 hover:font-semibold"
+                    }
+                  >
+                    My Recommendations
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to={`/user`}
+                    className={({ isActive }) =>
+                      isActive
+                        ? "text-blue-600 font-bold border-b-2 border-blue-600"
+                        : "hover:text-blue-600 hover:font-semibold"
+                    }
+                  >
+                    My Profile
+                  </NavLink>
+                </li>
+              </ul>
+            </details>
           </li>
         </>
       )}
@@ -116,10 +175,10 @@ const Header = () => {
                     {" "}
                     <img
                       src={user.photoURL}
-                      className="w-10 h-9 rounded-xl font-bold"
+                      className="w-10 h-9 rounded-xl font-bold mr-1"
                       alt=""
                     />{" "}
-                    Profile
+                    {user.displayName}
                   </div>
                 </NavLink>
 
@@ -136,7 +195,7 @@ const Header = () => {
             )}
           </div>
           {/* Mobile Nav */}
-          <div className="md:hidden flex items-center space-x-4">
+          <div className="md:hidden flex items-center space-x-4 ">
             <span
               className="cursor-pointer bg-slate-100 p-2 rounded-xl"
               onClick={() => setToggle(!toggle)}
@@ -146,9 +205,9 @@ const Header = () => {
             <div
               className={`${
                 toggle ? "flex" : "hidden"
-              } p-1 bg-blue-300 absolute top-16 right-0 mx-4 my-2 z-10 rounded-xl`}
+              } p-1 bg-blue-300 absolute top-16 right-1 mx-4 my-2 z-10 rounded-xl `}
             >
-              <ul className="list-none flex flex-col justify-end items-start gap-3">
+              <ul className="list-none flex flex-col justify-end items-start gap-1 ">
                 <li
                   className={mobileCss}
                   onClick={() => {
@@ -165,6 +224,7 @@ const Header = () => {
                 >
                   <NavLink to={`/queries/all`}>Queries</NavLink>
                 </li>
+
                 {loggedIn && (
                   <>
                     <li
@@ -223,6 +283,30 @@ const Header = () => {
                     <NavLink to={`/auth/login`}>Login</NavLink>
                   </li>
                 )}
+                <li
+                  className={mobileCss}
+                  onClick={() => {
+                    setToggle(!toggle);
+                  }}
+                >
+                  <NavLink to={`/pages/about`}>About</NavLink>
+                </li>
+                <li
+                  className={mobileCss}
+                  onClick={() => {
+                    setToggle(!toggle);
+                  }}
+                >
+                  <NavLink to={`/pages/faq`}>FAQ</NavLink>
+                </li>
+                <li
+                  className={mobileCss}
+                  onClick={() => {
+                    setToggle(!toggle);
+                  }}
+                >
+                  <NavLink to={`/pages/contact`}>Contact</NavLink>
+                </li>
               </ul>
             </div>
           </div>

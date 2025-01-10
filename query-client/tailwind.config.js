@@ -11,7 +11,7 @@ export default {
         "barlow": ["Barlow Condensed", "serif"],
       },
       colors: {
-        'buttonBG': '#ec3d08', 
+        'buttonBG': '#4a86e8', 
       },
     },
   },
