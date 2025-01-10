@@ -127,14 +127,13 @@ const MyRecomendations = () => {
                         </th>
                         <td>
                           <button
-                            className="inline-flex btn btn-error text-white text-xs"
+                            className="flex items-center justify-center p-3 btn btn-error text-white text-xs"
                             onClick={() => {
                               handleDelete(recommendation._id);
                               setqueryId(recommendation.queryId);
                             }}
                           >
-                            {" "}
-                            <FaTrash /> Delete
+                            <FaTrash />
                           </button>
                         </td>
                       </tr>
